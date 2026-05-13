@@ -1,0 +1,41 @@
+# Vivado generated files
+.Xil/
+*.jou
+*.log
+*.str
+*.backup.*
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.gen/
+*.xpr
+*.dcp
+*.bit
+*.ltx
+
+# Vitis / SDK generated files
+.metadata/
+Debug/
+Release/
+*.elf
+*.o
+*.d
+*.map
+
+# Simulation outputs
+*.wdb
+*.vcd
+*.fst
+*.wcfg
+
+# MATLAB generated/cache files
+*.asv
+*.fig
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
