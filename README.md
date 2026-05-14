@@ -66,17 +66,58 @@ The current base addresses used by the Vitis code are:
 
 These addresses must match the Vivado block design address map.
 
-## Build Notes
 
-This repository does not include a complete Vivado project export. The intended workflow is to create or rebuild the Vivado block design manually using the RTL files and required Xilinx IP cores.
 
-Required hardware components include:
+## Running the Solver
 
-MicroBlaze processor
-AXI interconnect
-3 AXI BRAM controllers with block memory generators for clause storage
-UARTLite
-Custom DMM solver IP
-Xilinx Block Memory Generator IPs used inside the solver core
+The design is controlled from Vitis through a MicroBlaze application. The FPGA bitstream must be generated in Vivado first, then exported to Vitis together with the hardware description.
 
-The BRAM IP configurations must match the widths and depths expected by the RTL.    
+## 1. Build the hardware in Vivado
+
+In Vivado:
+
+1. Rebuild the block design.
+2. Generate the output products.
+3. Create the HDL wrapper.
+4. Run synthesis and implementation.
+5. Generate the bitstream.
+
+After the bitstream is generated, export the hardware:
+File -> Export -> Export Hardware
+
+Open Vitis and create a new application project using the exported .xsa file.
+
+Use the provided Vitis source code from:
+
+software/vitis/main.c
+
+Build the application.
+After the application starts, it initializes UARTLite and waits for input from the host computer.
+
+After the Vitis application is running, start the MATLAB script that sends the problem instance over UART.
+
+The expected data order is:
+
+MAGIC_WORD
+number of variables
+number of clauses
+literal 1 of clause 0
+literal 2 of clause 0
+literal 3 of clause 0
+literal 1 of clause 1
+literal 2 of clause 1
+literal 3 of clause 1
+...
+
+The Vitis application writes the three literal streams into the three external clause BRAMs, configures the solver registers, starts the solver, waits for completion, and prints the result.
+
+A normal run should print something similar to:
+
+n=1000 n_clause=4300
+upload done
+done
+steps=...
+clk_counter=...
+donezo
+
+The exact number of steps and clock cycles depends on the problem instance.
