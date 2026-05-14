@@ -72,8 +72,6 @@ These addresses must match the Vivado block design address map.
 
 The design is controlled from Vitis through a MicroBlaze application. The FPGA bitstream must be generated in Vivado first, then exported to Vitis together with the hardware description.
 
-## 1. Build the hardware in Vivado
-
 In Vivado:
 
 1. Rebuild the block design.
